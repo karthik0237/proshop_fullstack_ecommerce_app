@@ -1,38 +1,46 @@
-import React, { useState, useEffect, use} from 'react'
+import React, { useState, useEffect } from "react";
+import { Row, Col } from "react-bootstrap";
 
-import {Row,Col} from 'react-bootstrap'
-import axios from 'axios'
+import { useDispatch, useSelector } from "react-redux";
 
-import Product from '../components/Product'
-
-
+import { getProducts } from "../redux/slice/productsListSlice";
+import Product from "../components/Product";
+import Loader from "../components/Loader";
+import Message from "../components/Message";
 
 function HomeScreen() {
+  const dispatch = useDispatch();
+  const productsList = useSelector((state) => state.productsList);
+  console.log("products: ", productsList);
+  const { isLoading, products, error } = productsList;
 
-    const [products,setProducts] = useState([])
-
-    useEffect( () => {
-      async function fetchProducts() {
-        const  {data} = await axios.get('http://127.0.0.1:8000/api/products/')
-        setProducts(data)
-        console.log(data)
-      }  
-      
-      fetchProducts()
-    }, [])
+  useEffect(() => {
+    function getprods() {
+      dispatch(getProducts());
+    }
+    getprods();
+  }, [dispatch]);
 
   return (
     <div>
       <h3>Latest Products</h3>
-      <Row>
-        {products.map((product) => (
-            <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
+
+      {isLoading ? (
+        <Loader /> 
+      ) : error ? (
+        <Message variant='danger' >{error.message}</Message>// content between tags is passed as children in props to the component
+      ) : (
+        <Row>
+          {products &&
+            products.map((product) => (
+              <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
                 <Product product={product} />
-            </Col>
-        ))}
-      </Row>
+              </Col>
+            ))}
+        </Row>
+      )}
     </div>
-  )
+  );
 }
 
-export default HomeScreen
+export default HomeScreen;
