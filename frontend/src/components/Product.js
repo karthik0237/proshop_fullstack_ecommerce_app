@@ -31,7 +31,7 @@ function Product({ product }) {
 
         <Card.Text as="h5">
           <div className="my-3">
-            <i className="fa fa-indian-rupee-sign"></i>.{product.price}
+            <i className="fa fa-indian-rupee-sign"></i>{product.price}
           </div>
         </Card.Text>
       </Card.Body>
