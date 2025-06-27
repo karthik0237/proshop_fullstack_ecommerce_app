@@ -1,14 +1,17 @@
 from django.shortcuts import render, get_object_or_404
 
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view,permission_classes
+from rest_framework.permissions import IsAuthenticated,IsAdminUser
+from rest_framework import status
+from django.contrib.auth.hashers import make_password
 
-from .models import Product
-from .serializers import ProductSerializer
+from baseapp.models import Product
+from baseapp.serializers import ProductSerializer
 
-# Create your views here.
+
 @api_view(['GET'])
-def getProducts(request):
+def get_products(request):
     queryset = Product.objects.all()
     serializer = ProductSerializer(queryset, many = True)
 
@@ -16,9 +19,8 @@ def getProducts(request):
 
 
 @api_view(['GET'])
-def getProduct(request, pk):
+def get_product(request, pk):
     product = get_object_or_404(Product, _id = pk)
     serializer = ProductSerializer(product, many = False)
 
     return Response(serializer.data)
-
