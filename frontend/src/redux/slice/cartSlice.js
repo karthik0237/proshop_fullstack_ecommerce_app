@@ -40,7 +40,7 @@ const cartSlice = createSlice({
     },
 
     reducers: {
-        removeItem: (state, action) => {
+        REMOVE_ITEM: (state, action) => {
         state.cartItems = Array(state.cartItems.find( item => item.product != action.payload))
         localStorage.setItem('cartItems',   JSON.stringify(state.cartItems))
         if(localStorage.getItem('cartItems') === '[null]'){
@@ -74,5 +74,5 @@ const cartSlice = createSlice({
 
    
 
-export const {removeItem} = cartSlice.actions
+export const {REMOVE_ITEM} = cartSlice.actions
 export default cartSlice.reducer

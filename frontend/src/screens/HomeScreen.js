@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Row, Col } from "react-bootstrap";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -14,21 +14,18 @@ function HomeScreen() {
   console.log("products: ", productsList);
   const { isLoading, products, error } = productsList;
 
-  useEffect(() => {
-    function getprods() {
+  useEffect(() => 
+    {
       dispatch(getProducts());
     }
-    getprods();
-  }, [dispatch]);
+  , [dispatch]);
 
   return (
     <div>
-      <h3>Latest Products</h3>
-
       {isLoading ? (
-        <Loader /> 
+        <Loader />
       ) : error ? (
-        <Message variant='danger' >{error.message}</Message>// content between tags is passed as children in props to the component
+        <Message variant="danger">{error.message}</Message> // content between tags is passed as children in props to the component
       ) : (
         <Row>
           {products &&

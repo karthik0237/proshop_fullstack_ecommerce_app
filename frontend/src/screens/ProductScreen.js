@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 
 import { Row,Col,Image,ListGroup,Button,Card,ListGroupItem, FormControl,} from "react-bootstrap";
@@ -11,7 +11,7 @@ import { getProductDetails } from "../redux/slice/productDetailsSlice";
 import { useDispatch, useSelector } from "react-redux";
 //import products from "../products";
 
-function ProductScreen({history}) {
+function ProductScreen() {
   const [qty, setQty] = useState(1)
   const params = useParams();
   const navigate = useNavigate()
