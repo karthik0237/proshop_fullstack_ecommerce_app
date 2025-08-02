@@ -1,4 +1,4 @@
-import { React, useEffect } from "react";
+import { React,useEffect } from "react";
 import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -15,7 +15,7 @@ import {
 
 import Message from "../components/Message";
 
-import { addToCart, removeItem } from "../redux/slice/cartSlice";
+import { addToCart, REMOVE_ITEM} from "../redux/slice/cartSlice";
 import Loader from "../components/Loader";
 
 function CartScreen() {
@@ -74,7 +74,8 @@ const checkOutHandler = () => {
                       <FormControl 
                         as="select"
                         value={qty}
-                        onChange={(e) => { dispatch(addToCart({id:item.product, qty:Number(e.target.value)}))}}
+                        onChange={(e) => { 
+                          dispatch(addToCart({id:item.product, qty:Number(e.target.value)}))}}
                         >
                           {
                             // if countinstock=3 then [0,1,2,3]
@@ -92,7 +93,7 @@ const checkOutHandler = () => {
                                   variant="light"
                                   onClick={(e) => {
                                   dispatch({
-                                    type: removeItem,
+                                    type: REMOVE_ITEM,
                                     payload:item.product
                                   })
                                   window.location.href='http://localhost:3000/cart/'

@@ -27,7 +27,7 @@ def register_user(request):
         serializer = UserSerializerWithToken(user, many=False)
         return Response(serializer.data)
     except:
-        message = {'detail': 'user with this email already exists'}
+        message = {'detail': 'User with this email already exists'}
         return Response(message,status = status.HTTP_400_BAD_REQUEST)
 
 
@@ -35,15 +35,31 @@ def register_user(request):
 @permission_classes([IsAuthenticated])
 def get_user_profile(request):
     user = request.user
-    serializer = UserSerializer(user, many = False)
+    serializer = UserSerializerWithToken(user, many = False)
     return Response(serializer.data)
 
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def update_user_profile(request):
+    user = request.user # request.user is current logged-in user if user logged in. Else it's AnonymousUser
+    serializer = UserSerializerWithToken(user, many = False)
+    data = request.data
+
+    user.first_name = data['name']
+    user.username = data['email']
+    user.email = data['email']
+    if data['password'] != '':
+        user.password = make_password(data['password'])
+    user.save()
+    return Response(serializer.data)
+
+    
 
 @api_view(['GET'])
 @permission_classes([IsAdminUser])
 def get_users(request):
-    user = request.user
     users = User.objects.all()
     serializer = UserSerializer(users, many = True)
     return Response(serializer.data)
+   
    

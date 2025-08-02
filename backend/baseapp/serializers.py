@@ -43,27 +43,25 @@ class UserSerializer(serializers.ModelSerializer):
 
 class UserSerializerWithToken(UserSerializer):
 
-    token = serializers.SerializerMethodField(read_only=True)
-
     class Meta:
         model = User
-        fields = ['id','_id','name','username','isAdmin','email','token']
+        # we take only few fields from user model to serialize for frontend
+        fields = ['id','_id','name','username','isAdmin','email']
 
-    def get_token(self, obj):
-        token = RefreshToken.for_user(obj)
-        return str(token.access_token)
+
     
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 
     def validate(self,attrs):
         data = super().validate(attrs)
-
+    # this serializer already serializes access and refreshtokens 
+    # add userserializer with token fields to it
         serializer = UserSerializerWithToken(self.user).data
         for k,v in serializer.items():
             data[k] = v
             
-        return data
+        return data 
 
 
 class ProductSerializer(BaseSerializer):
