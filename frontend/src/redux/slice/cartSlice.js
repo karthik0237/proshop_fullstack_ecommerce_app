@@ -29,6 +29,9 @@ export const addToCart = createAsyncThunk(
 const cartItemsFromStorage = localStorage.getItem('cartItems') ?
 JSON.parse(localStorage.getItem('cartItems')) : []
 
+const shippingAddressFromStorage = localStorage.getItem('shippingAddress') ?
+JSON.parse(localStorage.getItem('shippingAddress')) : {}
+
 
  
 const cartSlice = createSlice({
@@ -37,16 +40,29 @@ const cartSlice = createSlice({
     isLoading: false,
     cartItems: cartItemsFromStorage,
     error: null,
+    shippingAddress:shippingAddressFromStorage,
+    paymentMethod:null
     },
 
     reducers: {
-        REMOVE_ITEM: (state, action) => {
+        CART_REMOVE_ITEM: (state, action) => {
         state.cartItems = Array(state.cartItems.find( item => item.product != action.payload))
-        localStorage.setItem('cartItems',   JSON.stringify(state.cartItems))
+        localStorage.setItem('cartItems',JSON.stringify(state.cartItems))
         if(localStorage.getItem('cartItems') === '[null]'){
             localStorage.setItem('cartItems','[]')
         }
-        } 
+        },
+
+        CART_SAVE_SHIPPING_ADDRESS: (state,action) => {
+            state.shippingAddress = action.payload 
+            localStorage.setItem('shippingAddress', JSON.stringify(state.shippingAddress))
+        },
+
+        CART_SAVE_PAYMENT_METHOD: (state,action) => {
+            state.paymentMethod = action.payload 
+            localStorage.setItem('paymentMethod', JSON.stringify(state.paymentMethod))
+        }
+
     },
     
     extraReducers: (builder) => {
@@ -74,5 +90,5 @@ const cartSlice = createSlice({
 
    
 
-export const {REMOVE_ITEM} = cartSlice.actions
+export const { CART_REMOVE_ITEM,CART_SAVE_SHIPPING_ADDRESS,CART_SAVE_PAYMENT_METHOD} = cartSlice.actions
 export default cartSlice.reducer

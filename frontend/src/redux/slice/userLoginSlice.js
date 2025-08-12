@@ -32,7 +32,7 @@ const userLoginSlice = createSlice({
     error: null,
   },
   reducers: {
-    USER_LOGOUT: () => {
+    USER_LOGOUT: (state,action) => {
       localStorage.removeItem('userInfo')
     },
   },
