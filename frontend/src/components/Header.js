@@ -13,7 +13,7 @@ function Header() {
   const { userInfo } = userLogin
 
   const logoutHandler = () => {
-    dispatch({type:USER_LOGOUT})
+    dispatch(USER_LOGOUT())
     window.location.reload()
     }
 

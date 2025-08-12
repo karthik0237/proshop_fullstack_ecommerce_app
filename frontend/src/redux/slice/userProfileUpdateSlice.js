@@ -53,6 +53,5 @@ const userProfileUpdateSlice = createSlice({
   },
 });
 
-export const { USER_PROFILE_UPDATE_RESET } = userProfileUpdateSlice.actions;
 
 export default userProfileUpdateSlice.reducer;
