@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404
+from datetime import datetime
 
 from rest_framework.response import Response
 from rest_framework.decorators import api_view,permission_classes
@@ -61,23 +62,40 @@ def add_order_items(request):
         serializer = OrderSerializer(order,many=False)
         return Response(serializer.data)
 
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_my_orders(request):
+    user = request.user
+    orders = user.order_set.all()
+    serializer = OrderSerializer(orders, many = True)
+    return Response(serializer.data)
+
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_order_by_id(request,pk):
-     user = request.user
-     try:
-        order = Order.objects.all(id = pk)
-        print(order)
+    user = request.user
+    order = Order.objects.get(_id=pk)
+
+    try:
         if user.is_staff or order.user == user:
-         serializer = OrderSerializer(order, many=False)
-         return Response(serializer.data)
+            serializer = OrderSerializer(order, many=False)
+            return Response(serializer.data)
         else:
-         Response({
-             'detail':'Not Authorized to view this order'},
-            status=status.HTTP_401_UNAUTHORIZED)
+            Response({'detail':'Not authorized to view this order'}, 
+                    status=status.HTTP_400_BAD_REQUEST)
+    except:
+        return Response({'detail':'order not found'},status=status.HTTP_404_NOT_FOUND)
 
-     except Exception as e:
-      return Response({'detail':e},status=status.HTTP_400_BAD_REQUEST)
 
-         
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def update_order_to_paid(request,pk):
+    order = Order.objects.get(_id = pk)
+    order.isPaid = True
+    order.paidAt = datetime.now()
+    order.save()
+
+    return Response("Order was paid")
 

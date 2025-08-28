@@ -3,6 +3,8 @@ import { Nav, Navbar, Container, NavDropdown } from "react-bootstrap";
 import { Link,useNavigate } from 'react-router-dom'
 import {useDispatch,useSelector} from 'react-redux'
 import { USER_LOGOUT } from "../redux/slice/userLoginSlice";
+import { ORDER_DETAILS_RESET } from '../redux/slice/orderDetailsSlice'
+import { ORDERS_LIST_RESET } from "../redux/slice/ordersListSlice";
 
 
 function Header() {
@@ -14,6 +16,8 @@ function Header() {
 
   const logoutHandler = () => {
     dispatch(USER_LOGOUT())
+    dispatch(ORDER_DETAILS_RESET())
+    dispatch(ORDERS_LIST_RESET())
     window.location.reload()
     }
 
