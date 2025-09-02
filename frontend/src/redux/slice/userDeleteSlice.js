@@ -4,8 +4,8 @@ import store from "../store.js";
 
 
 
-export const userProfile = createAsyncThunk("userProfile",
-   async (id) => {
+export const deleteUser = createAsyncThunk("deleteUser",
+    async (id) => {
   const userLoginInfo = store.getState().userLogin.userInfo;
   const config = {
     headers: {
@@ -15,38 +15,38 @@ export const userProfile = createAsyncThunk("userProfile",
   };
 
   try {
-    const { data } = await axios.get(
-      `http://127.0.0.1:8000/api/users/${id}`,
+    const { data } = await axios.delete(
+      `http://127.0.0.1:8000/api/users/delete/${id}/`,
       config
     );
     return data;
   } catch (error) {
     console.log(error);
-    return error.response.data.detail;
+    return error.response.data;
   }
 });
 
-const userDetailsSlice = createSlice({
-  name: "userDetails",
+const userDeleteSlice = createSlice({
+  name: "userDelete",
   initialState: {
     isLoading: false,
-    user: [],
+    success: false,
     error: null,
   },
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(userProfile.pending, (state, action) => {
+    builder.addCase(deleteUser.pending, (state, action) => {
       state.isLoading = true;
     });
-    builder.addCase(userProfile.fulfilled, (state, action) => {
+    builder.addCase(deleteUser.fulfilled, (state, action) => {
       state.isLoading = false;
-      state.user = action.payload;  
+      state.success = true;  
     });
-    builder.addCase(userProfile.rejected, (state, action) => {
+    builder.addCase(deleteUser.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     });
   },
 });
 
-export default userDetailsSlice.reducer;
+export default userDeleteSlice.reducer;
