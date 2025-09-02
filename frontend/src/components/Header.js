@@ -5,6 +5,7 @@ import {useDispatch,useSelector} from 'react-redux'
 import { USER_LOGOUT } from "../redux/slice/userLoginSlice";
 import { ORDER_DETAILS_RESET } from '../redux/slice/orderDetailsSlice'
 import { ORDERS_LIST_RESET } from "../redux/slice/ordersListSlice";
+import { USERS_LIST_RESET } from "../redux/slice/usersListSlice";
 
 
 function Header() {
@@ -18,6 +19,7 @@ function Header() {
     dispatch(USER_LOGOUT())
     dispatch(ORDER_DETAILS_RESET())
     dispatch(ORDERS_LIST_RESET())
+    dispatch(USERS_LIST_RESET())
     window.location.reload()
     }
 
@@ -45,6 +47,15 @@ function Header() {
               : <Nav.Link as={Link} to='/login'><i className="fas fa-user"></i> Login</Nav.Link>
               }
               
+              {userInfo && userInfo.isAdmin && (
+                <NavDropdown title='Admin' id='admin-menu'>
+                      <NavDropdown.Item onClick={() => {navigate('/admin/userlist')}}>Users</NavDropdown.Item>
+                      <NavDropdown.Item onClick={() => {navigate('/admin/productlist')}}>Products</NavDropdown.Item>
+                      <NavDropdown.Item onClick={() => {navigate('/admin/orderlist')}}>Orders</NavDropdown.Item>
+                </NavDropdown>
+
+              )}
+
             </Nav>  
           </Navbar.Collapse>
         </Container>

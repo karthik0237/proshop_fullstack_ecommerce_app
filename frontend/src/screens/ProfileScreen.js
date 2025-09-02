@@ -34,7 +34,7 @@ function ProfileScreen() {
     if (!userInfo) {
       navigate("/login");
     } else {
-      if (!user || !user.name){
+      if (!user || !user.name || userInfo._id !== user._id){
          dispatch(userProfile('profile'));
          dispatch(getordersList())
 

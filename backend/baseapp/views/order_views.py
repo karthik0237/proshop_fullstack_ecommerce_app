@@ -67,7 +67,7 @@ def add_order_items(request):
 @permission_classes([IsAuthenticated])
 def get_my_orders(request):
     user = request.user
-    orders = user.order_set.all()
+    orders = user.order_set.all().order_by('-id')
     serializer = OrderSerializer(orders, many = True)
     return Response(serializer.data)
 
