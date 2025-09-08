@@ -13,16 +13,16 @@ export const getUsersList = createAsyncThunk("getUsersList", async (id) => {
     },
   };
 
-  try {
-    const { data } = await axios.get(
+try{
+  const { data } = await axios.get(
       `http://127.0.0.1:8000/api/users/`,
       config
     );
     return data;
-  } catch (error) {
-    console.log(error);
-    return error.response.data.detail;
-  }
+}catch(error){
+  return error
+}
+    
 });
 
 const usersListSlice = createSlice({

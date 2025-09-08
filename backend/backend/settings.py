@@ -145,7 +145,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 # Django’s STATICFILES_FINDERS setting contains a list of finders that know how to discover static files from various sources
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
 # url for images to be rendered 
 MEDIA_URL = '/images/'
@@ -153,7 +153,7 @@ MEDIA_URL = '/images/'
 STATICFILES_DIRS = [
     # BASR_DIR is a path to root directory of project(i.e., where manage.py exists)
     # path for all static files
-    BASE_DIR / 'static'
+    BASE_DIR / 'static',
 ]
 
 # Media files(user files get uploaded here)

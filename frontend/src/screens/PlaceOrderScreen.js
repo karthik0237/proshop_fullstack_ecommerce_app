@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Form, Button, Row, Col, ListGroup, Image, Card } from "react-bootstrap";
 
-import { createOrder,ORDER_RESET } from "../redux/slice/orderCreateSlice";
+import { createOrder,ORDER_CREATE_RESET } from "../redux/slice/orderCUDSlice";
 import FormContainer from "../components/FormContainer";
 import CheckoutSteps from "../components/CheckoutSteps";
 import Message from "../components/Message";

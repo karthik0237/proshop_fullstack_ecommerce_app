@@ -4,7 +4,7 @@ import { Link,useNavigate } from 'react-router-dom'
 import {useDispatch,useSelector} from 'react-redux'
 import { USER_LOGOUT } from "../redux/slice/userLoginSlice";
 import { ORDER_DETAILS_RESET } from '../redux/slice/orderDetailsSlice'
-import { ORDERS_LIST_RESET } from "../redux/slice/ordersListSlice";
+import { ORDERS_MY_LIST_RESET } from "../redux/slice/ordersMyListSlice";
 import { USERS_LIST_RESET } from "../redux/slice/usersListSlice";
 
 
@@ -18,8 +18,9 @@ function Header() {
   const logoutHandler = () => {
     dispatch(USER_LOGOUT())
     dispatch(ORDER_DETAILS_RESET())
-    dispatch(ORDERS_LIST_RESET())
+    dispatch(ORDERS_MY_LIST_RESET())
     dispatch(USERS_LIST_RESET())
+    navigate('/')
     window.location.reload()
     }
 

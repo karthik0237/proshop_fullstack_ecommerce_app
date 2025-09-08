@@ -61,6 +61,7 @@ def get_users(request):
     users = User.objects.all().order_by('id')
     serializer = UserSerializer(users, many = True)
     return Response(serializer.data)
+   
 
 @api_view(['GET'])
 @permission_classes([IsAdminUser])

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Row, Col, ListGroup, Image, Card, Button } from "react-bootstrap";
 
 import { getOrderDetails,ORDER_DETAILS_RESET } from "../redux/slice/orderDetailsSlice";
-import { ORDER_PAY_RESET, orderPayUpdate } from '../redux/slice/orderPaySlice'
+import { ORDER_PAY_RESET, orderPayUpdate,orderDeliveryUpdate,ORDER_DELIVERY_RESET } from '../redux/slice/orderCUDSlice'
 import Message from "../components/Message";
 import Loader from '../components/Loader'
 import RupeeSign from '../components/RupeeSign'
@@ -18,18 +18,24 @@ function OrderScreen() {
 
   const { isLoading,order,success,error } = useSelector(state => state.orderDetails)
   const { isLoading: loadingPay,success: successPay } = useSelector(state => state.orderPay)
-
+  const { isLoading: loadingDelivery,success: successDelivery} = useSelector(state => state.orderDelivery)
+  const { userInfo } = useSelector(state => state.userLogin)
 
   useEffect(() => {
-    if(!order || successPay || order._id !== Number(orderId)){
+    if(!userInfo){
+      navigate('/login')
+    }
+
+    if(!order || successPay || order._id !== Number(orderId) || successDelivery){
       dispatch(ORDER_PAY_RESET())
+      dispatch(ORDER_DELIVERY_RESET())
       dispatch(getOrderDetails(orderId))
     } 
     
-  },[dispatch,order, orderId, successPay])
+  },[dispatch,order, orderId, successPay,successDelivery])
 
   // clientid- AYofxY5SoX0qHA77wrB1FMe4V57fdQhdOIbUSsWdX4b7DXXhIdUCamcyGHIF66PDJu0EmfFpwJxW-wu5
-  
+
 
   return (
     <div>
@@ -148,6 +154,20 @@ function OrderScreen() {
                     className="btn btn-primary"
                     onClick={() => {dispatch(orderPayUpdate({orderId:orderId,paymentResult:true}))}}>
                     Pay Now
+                    </Button>
+                  </Row>
+              </ListGroup.Item>
+              )}
+
+
+              {userInfo && userInfo.isAdmin && order.isPaid && !order.isDelivered && (
+                <ListGroup.Item>
+                  <Row>
+                  {loadingDelivery && <Loader />}
+                  <Button
+                    className="btn btn-primary"
+                    onClick={() => {dispatch(orderDeliveryUpdate({orderId:orderId,deliveryResult:true}))}}>
+                    Mark as Delivered
                     </Button>
                   </Row>
               </ListGroup.Item>
