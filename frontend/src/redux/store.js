@@ -2,15 +2,15 @@ import { configureStore } from '@reduxjs/toolkit'
 
 import productsListReducer from './slice/productsListSlice'
 import productDetailsReducer from './slice/productDetailsSlice'
+import { productDeleteReducer, productCreateReducer,productUpdateReducer } from './slice/productCUDSlice'
 import cartReducer from './slice/cartSlice'
 import userLoginReducer from './slice/userLoginSlice'
 import userRegisterReducer from './slice/userRegisterSlice'
 import userDetailsReducer from './slice/userDetailsSlice'
 import userProfileUpdateReducer from './slice/userProfileUpdateSlice'
-import orderCreateReducer from './slice/orderCreateSlice'
+import { orderCreateReducer,ordersListReducer,orderPayReducer,orderDeliveryReducer } from './slice/orderCUDSlice'
 import orderDetailsReducer from './slice/orderDetailsSlice'
-import orderPayReducer from './slice/orderPaySlice'
-import ordersListReducer from './slice/ordersListSlice'
+import ordersMyListReducer from './slice/ordersMyListSlice'
 import usersListReducer from './slice/usersListSlice'
 import userDeleteReducer from './slice/userDeleteSlice'
 import userUpdateReducer from './slice/userUpdateSlice'
@@ -19,6 +19,9 @@ const store = configureStore({
     reducer : {
         productsList: productsListReducer,
         productDetails: productDetailsReducer,
+        productDelete: productDeleteReducer,
+        productCreate: productCreateReducer,
+        productUpdate: productUpdateReducer,
         cart: cartReducer,
         userLogin: userLoginReducer,
         userRegister: userRegisterReducer,
@@ -29,8 +32,10 @@ const store = configureStore({
         userUpdate: userUpdateReducer,
         orderCreate: orderCreateReducer,
         orderDetails: orderDetailsReducer,
-        orderPay: orderPayReducer,
         ordersList: ordersListReducer,
+        orderPay: orderPayReducer,
+        orderDelivery: orderDeliveryReducer,
+        ordersMyList: ordersMyListReducer,
         
     }
 })

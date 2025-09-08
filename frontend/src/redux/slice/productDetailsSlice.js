@@ -19,6 +19,13 @@ const productDetailsSlice = createSlice({
     product:null,
     error: null,
     },
+    reducers: {
+    PRODUCT_DETAILS_RESET: (state,action) => {
+        state.isLoading = false
+        state.product = null
+        state.error = null
+        }
+    },
     extraReducers: (builder) => {
         builder.addCase(getProductDetails.pending, (state, action) => {
             state.isLoading = true
@@ -34,6 +41,6 @@ const productDetailsSlice = createSlice({
     }
 })
 
-
+export const {PRODUCT_DETAILS_RESET} = productDetailsSlice.actions
 
 export default productDetailsSlice.reducer

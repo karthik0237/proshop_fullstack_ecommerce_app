@@ -4,7 +4,7 @@ import store from "../store";
 import axios from "axios";
 
 
-export const getordersList = createAsyncThunk("getordersList", 
+export const getMyOrdersList = createAsyncThunk("getMyOrdersList", 
     async () => {
   const userLoginInfo = store.getState().userLogin.userInfo;
   const config = {
@@ -25,8 +25,8 @@ export const getordersList = createAsyncThunk("getordersList",
 
 
 
-const ordersListSlice = createSlice({
-  name: "ordersList",
+const ordersMyListSlice = createSlice({
+  name: "ordersMyList",
   initialState: {
     isLoading: false,
     orders: [],
@@ -34,26 +34,26 @@ const ordersListSlice = createSlice({
   },
 
   reducers: {
-    ORDERS_LIST_RESET: (state,action) => {
+    ORDERS_MY_LIST_RESET: (state,action) => {
       state.isLoading = false
       state.orders = []
       state.error = null
     }
     },
   extraReducers: (builder) => {
-    builder.addCase(getordersList.pending, (state, action) => {
+    builder.addCase(getMyOrdersList.pending, (state, action) => {
       state.isLoading = true;
     });
-    builder.addCase(getordersList.fulfilled, (state, action) => {
+    builder.addCase(getMyOrdersList.fulfilled, (state, action) => {
       state.isLoading = false;
       state.orders = action.payload;
     });
-    builder.addCase(getordersList.rejected, (state, action) => {
+    builder.addCase(getMyOrdersList.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action.payload
     });
   },
 });
 
-export const { ORDERS_LIST_RESET }  = ordersListSlice.actions
-export default ordersListSlice.reducer;
+export const { ORDERS_MY_LIST_RESET }  = ordersMyListSlice.actions
+export default ordersMyListSlice.reducer;

@@ -5,8 +5,8 @@ import { Form, Button, Row, Col, Table } from "react-bootstrap";
 
 import { userProfile } from "../redux/slice/userDetailsSlice";
 import { profileUpdate } from '../redux/slice/userProfileUpdateSlice'
-import { getordersList } from '../redux/slice/ordersListSlice'
-import FormContainer from "../components/FormContainer";
+import { getMyOrdersList } from '../redux/slice/ordersMyListSlice'
+
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import RupeeSign from "../components/RupeeSign";
@@ -26,7 +26,7 @@ function ProfileScreen() {
   const { isLoading, user, error } = useSelector((state) => state.userDetails);
   const { userInfo } = useSelector((state) => state.userLogin);
   const {success,other} = useSelector(state => state.userProfileUpdate)
-  const { isLoading:loadingOrders,orders,error:errorOrders } = useSelector(state => state.ordersList)
+  const { isLoading:loadingOrders,orders,error:errorOrders } = useSelector(state => state.ordersMyList)
 
   const redirect = searchParams.redirect ? `/${searchParams.redirect}` : "/";
 
@@ -36,7 +36,7 @@ function ProfileScreen() {
     } else {
       if (!user || !user.name || userInfo._id !== user._id){
          dispatch(userProfile('profile'));
-         dispatch(getordersList())
+         dispatch(getMyOrdersList())
 
       }
       else {

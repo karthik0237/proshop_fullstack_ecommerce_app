@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-
 import axios from "axios";
+import store from "../store.js";
 
 // Action
 export const getProducts = createAsyncThunk("getProducts", async () => {
@@ -31,3 +31,7 @@ const productsListSlice = createSlice({
 });
 
 export default productsListSlice.reducer;
+
+
+
+
