@@ -2,12 +2,47 @@ main{
   min-height: 80vh;/*for content between header and footer*/
 }
 
-
-
-
 h3{
   padding: 1rem 0;
 }
 .rating span{
   margin:0.1rem;
 }
+
+
+
+h1{
+  font-size: 1.8rem;
+  padding:1rem 0;
+}
+
+h2{
+  font-size: 1.4rem;
+  padding:0.5rem 0;
+  color:rgb(116, 114, 114)
+}
+
+
+.carousel-img {
+  max-height: 400px;         /* control height */
+  width: 100%;               /* full width inside container */
+  object-fit: contain;       /* keeps aspect ratio (no stretch) */
+  background: #f9f9f9;       /* subtle background for transparent PNGs */
+  padding: 10px;
+}
+
+.carousel-caption-custom {
+  background: rgba(0, 0, 0, 0.5); /* semi-transparent bg */
+  border-radius: 10px;
+  padding: 5px 10px;
+  bottom: 20px;                   /* lift caption */
+}
+
+.carousel-caption-custom h5 {
+  color: #fff;                  /* white text for contrast */
+  font-weight: 600;
+  text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
+  font-size: 1.1rem;
+}
+
+

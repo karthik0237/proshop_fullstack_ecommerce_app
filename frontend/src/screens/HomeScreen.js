@@ -1,24 +1,30 @@
 import React, { useEffect } from "react";
 import { Row, Col } from "react-bootstrap";
-
+import { useNavigate,useLocation, useSearchParams } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
 
 import { getProducts } from "../redux/slice/productsListSlice";
 import Product from "../components/Product";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
+import Paginate from '../components/Paginate'
+import ProductCarousel from '../components/ProductCarousel'
 
 function HomeScreen() {
   const dispatch = useDispatch();
-  const productsList = useSelector((state) => state.productsList);
-  console.log("products: ", productsList);
-  const { isLoading, products, error } = productsList;
+  const navigate = useNavigate()
+  const location = useLocation()
+
+  const { isLoading,products,error,page,totalPages } = useSelector((state) => state.productsList);
+  console.log("products: ", products);
+
+  const keyword = location.search // entire url from ?
 
   useEffect(() => 
     {
-      dispatch(getProducts());
+      dispatch(getProducts(keyword));
     }
-  , [dispatch]);
+  , [dispatch,keyword]);
 
   return (
     <div>
@@ -27,6 +33,8 @@ function HomeScreen() {
       ) : error ? (
         <Message variant="danger">{error.message}</Message> // content between tags is passed as children in props to the component
       ) : (
+        <div>
+           {!keyword && <ProductCarousel />}
         <Row>
           {products &&
             products.map((product) => (
@@ -35,6 +43,8 @@ function HomeScreen() {
               </Col>
             ))}
         </Row>
+        <Paginate page={page} totalPages={totalPages} keyword={keyword} />
+        </div>
       )}
     </div>
   );

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Form, Button, Row, Col, Table } from "react-bootstrap";
 
 import { userProfile } from "../redux/slice/userDetailsSlice";
-import { profileUpdate } from '../redux/slice/userProfileUpdateSlice'
+import { profileUpdate } from '../redux/slice/userCUDSlice'
 import { getMyOrdersList } from '../redux/slice/ordersMyListSlice'
 
 import Loader from "../components/Loader";

@@ -2,10 +2,13 @@ import React,{useEffect} from "react";
 import { Nav, Navbar, Container, NavDropdown } from "react-bootstrap";
 import { Link,useNavigate } from 'react-router-dom'
 import {useDispatch,useSelector} from 'react-redux'
+
 import { USER_LOGOUT } from "../redux/slice/userLoginSlice";
 import { ORDER_DETAILS_RESET } from '../redux/slice/orderDetailsSlice'
 import { ORDERS_MY_LIST_RESET } from "../redux/slice/ordersMyListSlice";
 import { USERS_LIST_RESET } from "../redux/slice/usersListSlice";
+
+import SearchBox from './SearchBox'
 
 
 function Header() {
@@ -36,6 +39,7 @@ function Header() {
           
          <Navbar.Toggle id='basic-navbar-nav' />
           <Navbar.Collapse id="basic-navbar-nav">
+           <SearchBox />
             <Nav className="mr-auto">
               <Nav.Link as={Link} to='/cart'><i className="fas fa-shopping-cart"></i> Cart</Nav.Link>
 

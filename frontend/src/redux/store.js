@@ -1,19 +1,23 @@
 import { configureStore } from '@reduxjs/toolkit'
 
-import productsListReducer from './slice/productsListSlice'
+import { productsListReducer,productsTopRatedReducer } from './slice/productsListSlice'
 import productDetailsReducer from './slice/productDetailsSlice'
-import { productDeleteReducer, productCreateReducer,productUpdateReducer } from './slice/productCUDSlice'
+import { productDeleteReducer, productCreateReducer,productUpdateReducer,
+        productReviewCreateReducer } from './slice/productCUDSlice'
 import cartReducer from './slice/cartSlice'
+
 import userLoginReducer from './slice/userLoginSlice'
 import userRegisterReducer from './slice/userRegisterSlice'
 import userDetailsReducer from './slice/userDetailsSlice'
-import userProfileUpdateReducer from './slice/userProfileUpdateSlice'
-import { orderCreateReducer,ordersListReducer,orderPayReducer,orderDeliveryReducer } from './slice/orderCUDSlice'
+import usersListReducer from './slice/usersListSlice'
+import { userProfileUpdateReducer,userDeleteReducer,userUpdateReducer } from './slice/userCUDSlice'
+
+import { orderCreateReducer,ordersListReducer,orderPayReducer,
+        orderDeliveryReducer } from './slice/orderCUDSlice'
 import orderDetailsReducer from './slice/orderDetailsSlice'
 import ordersMyListReducer from './slice/ordersMyListSlice'
-import usersListReducer from './slice/usersListSlice'
-import userDeleteReducer from './slice/userDeleteSlice'
-import userUpdateReducer from './slice/userUpdateSlice'
+
+
 
 const store = configureStore({
     reducer : {
@@ -22,6 +26,8 @@ const store = configureStore({
         productDelete: productDeleteReducer,
         productCreate: productCreateReducer,
         productUpdate: productUpdateReducer,
+        productReviewCreate: productReviewCreateReducer,
+        productsTopRated: productsTopRatedReducer,
         cart: cartReducer,
         userLogin: userLoginReducer,
         userRegister: userRegisterReducer,
