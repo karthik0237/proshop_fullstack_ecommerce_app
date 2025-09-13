@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Form, Button, Row, Col } from "react-bootstrap";
 
 import { userProfile } from "../redux/slice/userDetailsSlice";
-import { updateUser } from '../redux/slice/userUpdateSlice'
+import { updateUser } from '../redux/slice/userCUDSlice'
 import FormContainer from "../components/FormContainer";
 import Loader from "../components/Loader";
 import Message from "../components/Message";

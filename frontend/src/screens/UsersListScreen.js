@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Table, Button, Row, Col } from "react-bootstrap";
 
 import { getUsersList } from "../redux/slice/usersListSlice";
-import { deleteUser } from '../redux/slice/userDeleteSlice'
+import { deleteUser } from '../redux/slice/userCUDSlice'
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 

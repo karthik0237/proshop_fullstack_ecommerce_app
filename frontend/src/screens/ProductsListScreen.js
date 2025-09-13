@@ -1,23 +1,26 @@
 import React from 'react'
 import { useEffect, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate,useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Table, Button, Row, Col } from "react-bootstrap";
 
 import { getProducts } from "../redux/slice/productsListSlice";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
+import Paginate from "../components/Paginate";
 import { deleteProduct,createProduct,PRODUCT_CREATE_RESET } from '../redux/slice/productCUDSlice';
 
 function ProductsListScreen() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const location = useLocation()
 
-    const { isLoading,products,error } = useSelector(state => state.productsList)
+    const { isLoading,products,error,page,totalPages } = useSelector(state => state.productsList)
     const { userInfo } = useSelector(state => state.userLogin)
     const { isLoading:loadingDelete,success:successDelete,error:errorDelete } = useSelector(state => state.productDelete)
     const { isLoading:loadingCreate,success:successCreate,product:createdProduct,error:errorCreate } = useSelector(state => state.productCreate)
 
+    let keyword = location.search
 
     useEffect(() => {
       dispatch(PRODUCT_CREATE_RESET())
@@ -29,10 +32,10 @@ function ProductsListScreen() {
       if(successCreate){
         navigate(`/admin/product/${createdProduct._id}/edit`)
       } else{
-        dispatch(getProducts())
+        dispatch(getProducts(keyword))
       }
         }
-      ,[dispatch,userInfo,navigate,successDelete,successCreate,successDelete])
+      ,[dispatch,userInfo,navigate,successDelete,successCreate,successDelete,keyword])
     
     const deleteHandler = (id) => {
       if(window.confirm('Are you sure to delete this product?')){
@@ -69,6 +72,7 @@ function ProductsListScreen() {
       ) : error ? (
         <Message variant='danger'>{error}</Message>
       ) : (
+        <div>
          <Table striped bordered hover responsive className="table-sm w-75">
             <thead className='text-center'>
               <tr>
@@ -105,6 +109,8 @@ function ProductsListScreen() {
               ))}
             </tbody>
           </Table>
+          <Paginate page={page} totalPages={totalPages} isAdmin={true} />
+          </div>
       )}
     </div>
   )

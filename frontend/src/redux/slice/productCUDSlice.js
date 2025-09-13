@@ -50,8 +50,8 @@ const productDeleteSlice = createSlice({
     });
   },
 });
-
 export const productDeleteReducer = productDeleteSlice.reducer;
+
 
 // CREATE PRODUCT
 export const createProduct = createAsyncThunk("createProduct",
@@ -162,3 +162,55 @@ const productUpdateSlice = createSlice({
 
 export const { PRODUCT_UPDATE_RESET } = productUpdateSlice.actions
 export const productUpdateReducer = productUpdateSlice.reducer;
+
+
+// CREATE PRODUCT REVIEW
+export const productCreateReview = createAsyncThunk("productCreateReview", 
+  async ({productId,review}) => {
+  const userLoginInfo = store.getState().userLogin.userInfo
+  const config = {
+    headers: {
+      "Content-type": "application/json",
+      Authorization: `Bearer ${userLoginInfo.access}`
+    },
+  };
+
+  const { data } = await axios.post(
+    `http://127.0.0.1:8000/api/products/${productId}/reviews/`,
+    review,
+    config
+  );
+  return data;
+});
+
+const productReviewCreateSlice = createSlice({
+  name: "productReviewCreate",
+  initialState: {
+    isLoading: false,
+    success:false,
+    error: null,
+  },
+  reducers: {
+    PRODUCT_REVIEW_CREATE_RESET: (state,action) => {
+        state.isLoading = false
+        state.success = false
+        state.error = null
+    }
+  },
+  extraReducers: (builder) => {
+    builder.addCase(productCreateReview.pending, (state, action) => {
+      state.isLoading = true;
+    });
+    builder.addCase(productCreateReview.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.success = true;
+    });
+    builder.addCase(productCreateReview.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.error.message
+    });
+  },
+});
+
+export const { PRODUCT_REVIEW_CREATE_RESET } = productReviewCreateSlice.actions
+export const productReviewCreateReducer = productReviewCreateSlice.reducer;

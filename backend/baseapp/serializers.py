@@ -65,10 +65,16 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 
 
 class ProductSerializer(BaseSerializer):
+    reviews = serializers.SerializerMethodField()
 
     class Meta:
         model = Product
         fields = '__all__'
+
+    def get_reviews(self,obj):
+        reviews = obj.review_set.all() # set of all reviews belong to a product
+        serializer = ReviewSerializer(reviews, many=True)
+        return serializer.data
 
 
 class OrderItemSerializer(BaseSerializer):
