@@ -18,7 +18,7 @@ function HomeScreen() {
   const { isLoading,products,error,page,totalPages } = useSelector((state) => state.productsList);
   console.log("products: ", products);
 
-  const keyword = location.search // entire url from ?
+  const keyword = location.search // entire url starting from ? to end
 
   useEffect(() => 
     {

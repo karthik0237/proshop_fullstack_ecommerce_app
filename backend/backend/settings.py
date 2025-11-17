@@ -13,10 +13,11 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 
 import os
+import dotenv
+dotenv.load_dotenv()
+
 from datetime import timedelta
 
-# creds is a python file that has secret api keys for database, aws etc. to be added to gitignore
-from . import creds
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,10 +27,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-$$sx0@c++5pqwucl6$#qry(j69b_ul)!xq8_6)pyl^9rh54b!k'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG') == 'True'
 
 ALLOWED_HOSTS = []
 
@@ -102,11 +103,11 @@ REST_FRAMEWORK = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': creds.DATABASE_NAME,
-        'USER': creds.DATABASE_USER,
-        'PASSWORD': creds.DATABASE_PASSWORD,
-        'HOST': creds.DATABASE_HOST,
-        'PORT': creds.DATABASE_PORT,
+        'NAME': os.getenv('DATABASE_NAME'),
+        'USER': os.getenv('DATABASE_USER'),
+        'PASSWORD': os.getenv('DATABASE_PASSWORD'),
+        'HOST': os.getenv('DATABASE_HOST'),
+        'PORT': os.getenv('DATABASE_PORT'),
     }
 }
 
@@ -166,7 +167,9 @@ MEDIA_ROOT = 'static/images'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000'
+]
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
