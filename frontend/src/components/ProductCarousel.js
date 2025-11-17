@@ -27,7 +27,7 @@ function ProductCarousel() {
       ) : error ? (
         <Message variant="danger">{error}</Message>
       ) : ( products &&
-        (<Carousel slide interval={4000} pause="hover">
+        (<Carousel slide interval={3000} pause="hover">
   {products.map((product) => (
     <Carousel.Item key={product._id}>
       <Link to={`/product/${product._id}`}>

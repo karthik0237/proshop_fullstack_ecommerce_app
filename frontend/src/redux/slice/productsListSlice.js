@@ -5,7 +5,7 @@ import store from "../store.js";
 // Action
 export const getProducts = createAsyncThunk("getProducts", 
   async (keyword = '') => {
-  const res = await axios.get(`http://127.0.1:8000/api/products${keyword}`);
+  const res = await axios.get(`/api/products${keyword}`);
   return res.data;
 });
 
@@ -42,7 +42,7 @@ export const productsListReducer = productsListSlice.reducer
 // topRated RATED PRODUCTS
 export const topRatedProducts = createAsyncThunk("topRatedProducts", 
   async () => {
-  const res = await axios.get(`http://127.0.1:8000/api/products/top/`);
+  const res = await axios.get(`/api/products/top/`);
   return res.data;
 });
 
